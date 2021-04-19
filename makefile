@@ -10,6 +10,7 @@ YQ:=docker run --rm -v "$(PWD):$(PWD)" -w="$(PWD)" --entrypoint yq linuxserver/y
 services    :=$(shell $(YQ) -r '.services|keys[]' docker-compose.yml)
 all_up      :=$(addsuffix _up, $(services))
 all_down    :=$(addsuffix _down, $(services))
+all_pull    :=$(addsuffix _pull, $(services))
 all_logs    :=$(addsuffix _logs, $(services))
 all_status  :=$(addsuffix _status, $(services))
 all_restart :=$(addsuffix _restart, $(services))
@@ -26,6 +27,8 @@ up: $(all_up)
 logs: $(all_logs)
 
 down: $(all_down)
+
+pull: $(all_pull)
 
 status: $(all_status)
 
@@ -54,6 +57,10 @@ $(1)_up:
 $(1)_down:
 	@echo Bringing DOWN $(1)
 	docker-compose $${$(1)_ENVCMD} rm --force --stop -v $(1)
+
+$(1)_pull:
+	@echo Pulling updated $(1)
+	docker-compose $${$(1)_ENVCMD} pull $(1)
 
 $(1)_restart:
 	@echo Restarting $(1)
