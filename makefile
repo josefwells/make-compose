@@ -52,7 +52,7 @@ $(1)_ENVCMD:=$(if $(wildcard ./$(1)/$(1).env), --env-file ./$(1)/$(1).env, )
 
 $(1)_up:
 	@echo Bringing UP $(1)
-	docker-compose $${$(1)_ENVCMD} up -d $(1)
+	docker-compose $${$(1)_ENVCMD} up --build -d $(1)
 
 $(1)_down:
 	@echo Bringing DOWN $(1)
@@ -65,7 +65,7 @@ $(1)_pull:
 $(1)_restart:
 	@echo Restarting $(1)
 	docker-compose rm --force --stop -v $(1)
-	docker-compose $${$(1)_ENVCMD} up -d $(1)
+	docker-compose $${$(1)_ENVCMD} up --build -d $(1)
 
 $(1)_logs:
 	@echo Logs for $(1)
