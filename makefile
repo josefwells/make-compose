@@ -10,7 +10,7 @@ DC:=UID_GID=$(shell id -u):$(shell id -g) docker-compose
 NFT_TOOL=../nft_tool/nft_tool.py
 NFT_TOOL_OPT=--table global --chain preroute
 
-services    :=$(shell docker-compose config --services)
+services    :=$(shell $(DC) config --services)
 all_up      :=$(addsuffix _up, $(services))
 all_down    :=$(addsuffix _down, $(services))
 all_pull    :=$(addsuffix _pull, $(services))
@@ -34,7 +34,7 @@ test_yamllint: docker-compose.yml
 	yamllint $^
 
 test_config: docker-compose.yml
-	docker-compose config -q
+	$(DC) config -q
 
 # Top level targets just depend on calling all lower level targets
 up: $(all_up) 
