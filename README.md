@@ -10,6 +10,11 @@ There is another target for all services, "make top", to which just does "docker
 
 You can test your yaml formatting with "make test".
 
-Unless you are providing "yq" for parsing yaml, be sure fetch the image with:
-make update
 
+This make structure also assumes you need to handle adding/removing nftables rules for your docker interface.
+This is the case when your docker is configured (in docker.json) with:
+    "iptables":false,
+    "userland-proxy": false
+
+You must know a lot about networking!
+Update the makefile variables with your nftable table name, and pre-routing chain.
