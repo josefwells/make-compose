@@ -1,7 +1,5 @@
-# Start services
 
-
-.PHONY: list test up logs down status update docker_yq
+.PHONY: list test up logs journald down status update nftadd nftdel pull build ps restart top
 
 .SECONDEXPANSION:
 
@@ -37,7 +35,7 @@ test_config: docker-compose.yml
 	$(DC) config -q
 
 # Top level targets just depend on calling all lower level targets
-up: $(all_up) 
+up: $(all_up)
 
 logs: $(all_logs)
 
@@ -97,6 +95,10 @@ $(1)_restart:
 	@echo Restarting $(1)
 	$(DC) rm --force --stop -v $(1)
 	$(DC) $${$(1)_ENVCMD} up --build -d $(1)
+
+$(1)_journal:
+	@echo Journal for $(1)
+	sudo journalctl CONTAINER_NAME=$(1)
 
 $(1)_logs:
 	@echo Logs for $(1)
