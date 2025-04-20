@@ -5,8 +5,8 @@
 
 DC:=DOCKER_BUILDKIT=1 UID_GID=$(shell id -u):$(shell id -g) docker-compose
 
-NFT_TOOL=../nft_tool/nft_tool.py
-NFT_TOOL_OPT=--table global --chain preroute
+NFT_TOOL:=../nft_tool/nft_tool.py
+NFT_TOOL_OPT:=--table global --chain preroute
 
 services    :=$(shell $(DC) config --services)
 all_up      :=$(addsuffix _up, $(services))
