@@ -94,7 +94,7 @@ $(1)_build:
 $(1)_restart:
 	@echo Restarting $(1)
 	$(DC) rm --force --stop -v $(1)
-	$(DC) $${$(1)_ENVCMD} up --build -d $(1)
+	$(DC) $${$(1)_ENVCMD} up --pull always --build -d $(1)
 
 $(1)_journal:
 	@echo Journal for $(1)
